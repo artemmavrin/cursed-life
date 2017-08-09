@@ -1,4 +1,4 @@
-#`life` - Conway's Game of Life in Python 3
+# `life` - Conway's Game of Life in Python 3
 
 ![Screenshot](images/life_rp2_glider.gif)
 
