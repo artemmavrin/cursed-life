@@ -1,9 +1,9 @@
-Conway's Game of Life in Python 3
-=================================
+Conway's Game of Life in Python 3.7
+===================================
 
 Play John Conway's
 `Game of Life <https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life>`__ in the
-terminal using the Python 3
+terminal using the Python 3.7
 `curses <https://docs.python.org/3.4/library/curses.html>`__ module.
 The game board can be any of the following:
 
