@@ -1,20 +1,11 @@
-"""Play Conway's Game of Life in the terminal."""
+"""Define Conway's Game of Life."""
 
-import argparse
-import curses
 import enum
-import itertools
 import numbers
 import warnings
 
 import numpy as np
 from scipy.signal import correlate
-
-# Dead cells are marked by the space character: ' '
-_CH_DEAD = chr(32)
-
-# Living cells are marked by the character '@'
-_CH_ALIVE = chr(64)
 
 # Kernel for cross-correlation to determine the number of neighbors of a cell
 _KERNEL = np.asarray([[1, 1, 1],
@@ -28,9 +19,13 @@ class Geometry(enum.Enum):
     RECTANGLE = "rectangle"
     CYLINDER = "cylinder"
     TORUS = "torus"
-    MOBIUS_STRIP = "Mobius strip"
-    KLEIN_BOTTLE = "Klein bottle"
-    PROJECTIVE_PLANE = "projective plane"
+    MOBIUS_STRIP = "mobius"
+    KLEIN_BOTTLE = "klein"
+    PROJECTIVE_PLANE = "projective"
+
+
+# Available board geometries as strings
+GEOMETRIES = [geometry.value for geometry in Geometry]
 
 
 def _check_positive_int(value, name):
@@ -148,9 +143,6 @@ class Life:
         # Initialize the board
         self._padded_state = np.zeros(shape=(n_rows + 2, n_cols + 2),
                                       dtype=np.bool_)
-
-        # TODO: this next line is unnecessary but removing it bothers PyCharm
-        self.state = self.state
 
     @property
     def state(self):
@@ -275,75 +267,3 @@ class Life:
         self._padded_state[0, -1] = self.state[0, -1]
         self._padded_state[-1, 0] = self.state[-1, 0]
         self._padded_state[-1, -1] = self.state[-1, -1]
-
-
-def main(stdscr, *, geometry, prob, seed):
-    """Game of Life driver function.
-
-    Parameters
-    ----------
-    stdscr : curses.window
-        The main curses window.
-
-    geometry : str
-        The Game of Life board geometry.
-
-    prob : float
-        Probability of a cell starting out alive.
-
-    seed : int, array-like, or None
-        Seed for the pseudo-random number generator.
-    """
-    # Clear the screen
-    stdscr.clear()
-
-    # Don't wait for the user to enter anything
-    stdscr.timeout(0)
-
-    # Hide the cursor
-    curses.curs_set(0)
-
-    # Get the full dimensions of the screen
-    n_rows, n_cols = stdscr.getmaxyx()
-
-    # Create a Game of Life instance to be played
-    life = Life(n_rows, n_cols, geometry=geometry, prob=prob, seed=seed)
-    life.randomize()
-
-    while True:
-        try:
-            for row, col in itertools.product(range(n_rows), range(n_cols)):
-                cell_marker = _CH_ALIVE if life.state[row, col] else _CH_DEAD
-                try:
-                    stdscr.addch(row, col, cell_marker)
-                except curses.error:
-                    pass
-            stdscr.refresh()
-            curses.delay_output(60)
-            life.evolve()
-            c = stdscr.getch()
-            if c != -1:
-                break
-        except KeyboardInterrupt:
-            break
-
-
-# Program description
-_DESCRIPTION = "Conway's Game of Life."
-
-# Available board geometries
-_GEOMETRIES = [geometry.value for geometry in Geometry]
-
-# Command line argument parsing
-parser = argparse.ArgumentParser(description=_DESCRIPTION)
-
-parser.add_argument("--geometry", choices=_GEOMETRIES, default="torus",
-                    help="Specify the board geometry.")
-parser.add_argument("--seed", type=int, default=None,
-                    help="Pseudo-random number generator seed.")
-parser.add_argument("--prob", type=float, default=0.25,
-                    help="Probability of a cell starting out alive.")
-
-if __name__ == "__main__":
-    args = parser.parse_args()
-    curses.wrapper(main, geometry=args.geometry, prob=args.prob, seed=args.seed)
