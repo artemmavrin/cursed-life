@@ -23,18 +23,17 @@ Installation
     git clone https://github.com/artemmavrin/cursed-life.git
     cd cursed-life
     python -m pip install -r requirements.txt
+    python setup.py install
 
 
 Usage
 -----
 
-From the ``cursed-life`` directory, run
-
 .. code:: shell
 
     python -m life
 
-To see usage instructions, run
+To see usage instructions and additional command-line arguments, run
 
 .. code:: shell
 
