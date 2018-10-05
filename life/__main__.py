@@ -19,14 +19,16 @@ _DESCRIPTION = "Conway's Game of Life."
 parser = argparse.ArgumentParser(description=_DESCRIPTION)
 
 parser.add_argument("--geometry", type=str, choices=GEOMETRIES,
-                    default=Geometry.TORUS, help="Specify the board geometry.")
-parser.add_argument("--seed", type=int, default=None,
-                    help="Pseudo-random number generator seed.")
+                    default=Geometry.TORUS, help="specify the board geometry")
 parser.add_argument("--prob", type=float, default=0.25,
-                    help="Probability of a cell starting out alive.")
+                    help="probability of a cell starting out alive")
+parser.add_argument("--seed", type=int, default=None,
+                    help="pseudo-random number generator seed")
+parser.add_argument("--delay", type=int, default=60,
+                    help="number of milliseconds to pause between states")
 
 
-def main(stdscr, *, geometry, prob, seed):
+def main(stdscr, *, geometry, prob, seed, delay):
     """Game of Life driver function.
 
     Parameters
@@ -42,6 +44,9 @@ def main(stdscr, *, geometry, prob, seed):
 
     seed : int, array-like, or None
         Seed for the pseudo-random number generator.
+
+    delay : int
+        Number of milliseconds to pause between consecutive board states.
     """
     # Clear the screen
     stdscr.clear()
@@ -68,7 +73,7 @@ def main(stdscr, *, geometry, prob, seed):
                 except curses.error:
                     pass
             stdscr.refresh()
-            curses.delay_output(60)
+            curses.delay_output(delay)
             life.evolve()
             c = stdscr.getch()
             if c != -1:
@@ -79,4 +84,5 @@ def main(stdscr, *, geometry, prob, seed):
 
 if __name__ == "__main__":
     args = parser.parse_args()
-    curses.wrapper(main, geometry=args.geometry, prob=args.prob, seed=args.seed)
+    curses.wrapper(main, geometry=args.geometry, prob=args.prob, seed=args.seed,
+                   delay=args.delay)
