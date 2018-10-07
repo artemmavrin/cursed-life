@@ -12,11 +12,14 @@ _CH_DEAD = chr(32)
 # Living cells are marked by the character '@'
 _CH_ALIVE = chr(64)
 
+# Program name
+_PROGRAM = "python -m life"
+
 # Program description
-_DESCRIPTION = "Conway's Game of Life."
+_DESCRIPTION = "Conway's Game of Life on compact surfaces."
 
 # Command line argument parsing
-parser = argparse.ArgumentParser(description=_DESCRIPTION)
+parser = argparse.ArgumentParser(prog=_PROGRAM, description=_DESCRIPTION)
 
 parser.add_argument("--geometry", type=str, choices=GEOMETRIES,
                     default=Geometry.TORUS, help="specify the board geometry")
