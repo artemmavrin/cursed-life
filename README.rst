@@ -5,7 +5,6 @@ Play John Conway's
 `Game of Life <https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life>`__ in the
 terminal using the Python 3.7
 `curses <https://docs.python.org/3/library/curses.html>`__ module.
-
 The Game of Life is a cellular automaton consisting of discrete "cells" living
 on a compact board. Each cell is either "alive" or "dead" at a given moment. At
 discrete time steps, a cell's state evolves according to the following rules:
@@ -28,6 +27,13 @@ be any of the following compact surfaces:
 
 All of these non-rectangle boards can be visualized as a rectangle with one or
 more pairs of edges identified.
+
+.. figure:: images/glider_rp2.gif
+    :alt: glider on a real projective plane
+
+    **Figure.** A
+    `glider <https://en.wikipedia.org/wiki/Glider_(Conway%27s_Life)>`__ moving
+    on a real projective plane.
 
 Installation
 ------------
