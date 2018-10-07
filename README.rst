@@ -28,11 +28,17 @@ be any of the following compact surfaces:
 All of these non-rectangle boards can be visualized as a rectangle with one or
 more pairs of edges identified.
 
+
+.. figure:: images/torus.gif
+    :alt: Game of Life on a torus
+
+    **Figure.** The Game of Life played on a torus.
+
 .. figure:: images/glider_rp2.gif
     :alt: glider on a real projective plane
 
-    **Figure.** A
-    `glider <https://en.wikipedia.org/wiki/Glider_(Conway%27s_Life)>`__ moving
+    **Figure.**
+    A `glider <https://en.wikipedia.org/wiki/Glider_(Conway%27s_Life)>`__ moving
     on a real projective plane.
 
 Installation
