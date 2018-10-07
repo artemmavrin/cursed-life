@@ -106,6 +106,7 @@ class Life:
         if not (0 <= row < self.n_rows and 0 <= col < self.n_cols):
             raise IndexError("Invalid row or column index.")
         self._padded_state[row + 1, col + 1] ^= True
+        self._update_padding()
 
     # State evolution functions
 
